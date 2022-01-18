@@ -23,52 +23,8 @@ static const char *git_commands[] = {
 
 // Tap dancing
 
-// Tap dance state
-static td_tap_t fn_tap_state = {.is_press_action = true, .state = TD_NONE};
-
-// Get number of taps
-td_state_t cur_dance(qk_tap_dance_state_t *state) {
-    if (state->count == 1) {
-        if (!state->pressed)
-            return TD_SINGLE_TAP;
-        else
-            return TD_SINGLE_HOLD;
-    } else if (state->count == 2)
-        return TD_DOUBLE_TAP;
-    else
-        return TD_UNKNOWN;
-}
-
-// FN tap dance functions
-void fn_finished(qk_tap_dance_state_t *state, void *user_data) {
-    fn_tap_state.state = cur_dance(state);
-    switch (fn_tap_state.state) {
-        case TD_SINGLE_HOLD:
-            layer_on(_LF);
-            break;
-        case TD_DOUBLE_TAP:
-            set_oneshot_layer(_LG, ONESHOT_START);
-            clear_oneshot_layer_state(ONESHOT_PRESSED);
-            break;
-        default:
-            break;
-    }
-}
-
-void fn_reset(qk_tap_dance_state_t *state, void *user_data) {
-    switch (fn_tap_state.state) {
-        case TD_SINGLE_HOLD:
-            layer_off(_LF);
-            break;
-        default:
-            break;
-    }
-    fn_tap_state.state = TD_NONE;
-}
-
 // Define tap dance key functionality
 qk_tap_dance_action_t tap_dance_actions[] = {
-    [TD_FN_LG]     = ACTION_TAP_DANCE_FN_ADVANCED(NULL, fn_finished, fn_reset),
     [TD_CTRL_TERM] = ACTION_TAP_DANCE_DOUBLE(KC_LCTRL, LCA(KC_T)),
 };
 
@@ -83,7 +39,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         TD(TD_CTRL_TERM),   KC_LGUI, KC_LALT,                   KC_SPC,                             KC_RALT, TD(TD_FN_LG), KC_APP,  KC_RCTL,            KC_LEFT, KC_DOWN, KC_RGHT \
     ),
     [_LF] = LAYOUT(
-        _______, DM_PLY1, DM_PLY2,  _______, _______, DM_REC1, DM_REC2, _______, _______, DM_RSTP, _______, _______, C(KC_L),            KC_MUTE, _______, _______, \
+        _______, DM_PLY1, DM_PLY2,  _______, _______, DM_REC1, DM_REC2, _______, _______, DM_RSTP, _______, _______, G(KC_L),            KC_MUTE, _______, _______, \
         _______, _______, OSL(_LG), _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,   KC_MPLY, KC_MSTP, KC_VOLU, \
         _______, RGB_SPD, RGB_VAI,  RGB_SPI, RGB_HUI, RGB_SAI, _______, U_T_AUTO,U_T_AGCR,_______, _______, _______, _______, _______,   KC_MPRV, KC_MNXT, KC_VOLD, \
         _______, RGB_RMOD,RGB_VAD,  RGB_MOD, RGB_HUD, RGB_SAD, _______, _______, _______, _______, _______, _______, _______, \

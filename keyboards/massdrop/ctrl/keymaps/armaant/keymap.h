@@ -37,24 +37,8 @@ enum git_macro_keycodes {
 
 // Tap dance keycodes
 enum tapdance_keycodes {
-    TD_FN_LG = 0,  // Tap dance key to switch to git layer on FN double press
-    TD_CTRL_TERM,  // Tap dance key to open terminal on LCTRL double press
+    TD_CTRL_TERM = 0,  // Tap dance key to open terminal on LCTRL double press
 };
-
-// Type of tap
-typedef enum {
-    TD_NONE,         //
-    TD_UNKNOWN,      //
-    TD_SINGLE_TAP,   //
-    TD_SINGLE_HOLD,  //
-    TD_DOUBLE_TAP    //
-} td_state_t;
-
-// Tap dance state
-typedef struct {
-    bool       is_press_action;
-    td_state_t state;
-} td_tap_t;
 
 // Layer names
 enum layout_names {
