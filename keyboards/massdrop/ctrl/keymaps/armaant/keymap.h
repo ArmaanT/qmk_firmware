@@ -37,7 +37,7 @@ enum git_macro_keycodes {
 
 // Tap dance keycodes
 enum tapdance_keycodes {
-    TD_CTRL_TERM = 0,  // Tap dance key to open terminal on LCTRL double press
+    TD_BSLS_TERM = 0,  // Tap dance key to open terminal on LCTRL double press
 };
 
 // Layer names
